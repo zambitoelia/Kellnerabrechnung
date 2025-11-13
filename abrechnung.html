@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kellnerabrechnung</title>
+  <style>
+    body { font-family: system-ui; background:#0f172a; color:#e5e7eb; margin:0; }
+    .wrap { max-width:600px; margin:0 auto; padding:16px; }
+    .card { background:#111827; border-radius:12px; padding:16px; margin-bottom:16px; }
+    h2 { margin:0 0 12px; font-size:1rem; color:#94a3b8; }
+    input, button { width:100%; padding:12px; border-radius:8px; border:none; font-size:1rem; }
+    input { margin-bottom:10px; }
+    button { background:#22c55e; color:#052e12; font-weight:600; cursor:pointer; }
+    .stats { display:flex; justify-content:space-between; margin-top:12px; }
+    .stat { text-align:center; flex:1; }
+    .stat label { display:block; font-size:.8rem; color:#94a3b8; }
+    .stat .value { font-size:1.4rem; font-weight:700; }
+    .list { margin-top:12px; border-top:1px solid #1f2937; }
+    .row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #1f2937; gap:12px; }
+    .row:last-child { border-bottom:none; }
+    .row label { flex-shrink:0; min-width:auto; }
+    .row input { flex:1; max-width:80px; }
+    .amt { font-variant-numeric:tabular-nums; }
+    .actions button { background:#ef4444; color:#fff; font-size:.8rem; padding:6px 10px; margin-left:8px; }
+    .row .sum { flex-shrink:0; min-width:60px; text-align:right; font-size:0.9rem; color:#94a3b8; }
+    /* banknote-specific alignment: make labels same width, inputs aligned and sums closer */
+    .bills-list .row label { flex:0 0 72px; width:72px; }
+    .bills-list .row input { flex:0 0 64px; width:64px; }
+    .bills-list .row .sum { flex:0 0 72px; width:72px; margin-left:6px; text-align:right; }
+  /* header layout for small controls + sum */
+  .card-head { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+  .card-head .left { display:flex; align-items:center; gap:12px; }
+  .card-head .sum { font-weight:700; color:#e5e7eb; }
+  .card-head .sum .value { font-size:1rem; }
+  /* header / clock */
+  /* stack header vertically: title above the small date/time */
+  .header { display:flex; flex-direction:column; align-items:flex-start; gap:6px; margin-bottom:12px; }
+  .header h1 { margin:0; font-size:2.4rem; line-height:1.02; color:#e5e7eb; max-width:100%; word-break:break-word; }
+  /* on small screens allow wrapping and use a slightly smaller size so it can take two lines */
+  @media (max-width:480px){
+    .header h1 { font-size:2.5rem; }
+  }
+  .clock { color:#94a3b8; font-size:1.5rem; margin-top:2px; }
+    .small-btn { width:auto; padding:6px 8px; font-size:0.75rem !important; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>Kellnerabrechnung</h1>
+      <div id="clock" class="clock">--</div>
+    </div>
+    <div class="card">
+      <h2>POS-Beleg eingeben</h2>
+      <input id="amount" inputmode="decimal" type="text" placeholder="Betrag (€)" />
+      <button id="addBtn">Beleg hinzufügen</button>
+    </div>
+
+    <div class="card">
+      <h2>Übersicht</h2>
+      <div class="stats">
+        <div class="stat">
+          <label>Anzahl Belege</label>
+          <div class="value" id="count">0</div>
+        </div>
+        <div class="stat">
+          <label>Summe</label>
+          <div class="value" id="sum">€ 0,00</div>
+        </div>
+      </div>
+
+      <div class="list" id="list"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-head">
+          <div class="left">
+            <h2>Münzen Zähler</h2>
+            <button id="clearCoins" class="small-btn" style="background:#ef4444;">Löschen</button>
+          </div>
+          <div class="sum">
+            <div class="label">Münzen</div>
+            <div class="value" id="coinSum">€ 0,00</div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="list">
+            <div class="row">
+              <label>0,10 €</label>
+              <input id="coin10" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+            </div>
+            <div class="row">
+              <label>0,20 €</label>
+              <input id="coin20" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+            </div>
+            <div class="row">
+              <label>0,50 €</label>
+              <input id="coin50" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+            </div>
+            <div class="row">
+              <label>1,00 €</label>
+              <input id="coin100" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+            </div>
+            <div class="row">
+              <label>2,00 €</label>
+              <input id="coin200" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head">
+          <div class="left">
+            <h2>Banknoten Zähler</h2>
+            <button id="clearBills" class="small-btn" style="background:#ef4444;">Löschen</button>
+          </div>
+          <div class="sum">
+            <div class="label">Banknoten</div>
+            <div class="value" id="billSum">€ 0,00</div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="list bills-list">
+            <div class="row">
+              <label>100,00 €</label>
+              <input id="bill100" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+              <div class="sum" id="bill100Sum">€ 0,00</div>
+            </div>
+            <div class="row">
+              <label>50,00 €</label>
+              <input id="bill50" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+              <div class="sum" id="bill50Sum">€ 0,00</div>
+            </div>
+            <div class="row">
+              <label>20,00 €</label>
+              <input id="bill20" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+              <div class="sum" id="bill20Sum">€ 0,00</div>
+            </div>
+            <div class="row">
+              <label>10,00 €</label>
+              <input id="bill10" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+              <div class="sum" id="bill10Sum">€ 0,00</div>
+            </div>
+            <div class="row">
+              <label>5,00 €</label>
+              <input id="bill5" type="tel" inputmode="numeric" min="0" placeholder="Anzahl" />
+              <div class="sum" id="bill5Sum">€ 0,00</div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Gesamtsumme Bargeld</h2>
+        <div class="stat">
+          <div class="value" id="totalSum">€ 0,00</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Gesamtkassiert</h2>
+        <div class="stat">
+          <div class="value" id="grandTotal" style="font-size:2rem;">€ 0,00</div>
+        </div>
+        <button id="clearAll" style="background:#ef4444; margin-top:16px;">Alles Löschen</button>
+    </div>
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <script>
+    const amountEl = document.getElementById('amount');
+    const addBtn = document.getElementById('addBtn');
+    const listEl = document.getElementById('list');
+    const countEl = document.getElementById('count');
+    const sumEl = document.getElementById('sum');
+    const state = { items: [] };
+
+    // Münzen
+    const coin10 = document.getElementById('coin10');
+    const coin20 = document.getElementById('coin20');
+    const coin50 = document.getElementById('coin50');
+    const coin100 = document.getElementById('coin100');
+    const coin200 = document.getElementById('coin200');
+    const coinSumEl = document.getElementById('coinSum');
+
+    // Banknoten
+    const bill5 = document.getElementById('bill5');
+    const bill10 = document.getElementById('bill10');
+    const bill20 = document.getElementById('bill20');
+    const bill50 = document.getElementById('bill50');
+    const bill100 = document.getElementById('bill100');
+    const billSumEl = document.getElementById('billSum');
+    const totalSumEl = document.getElementById('totalSum');
+    const grandTotalEl = document.getElementById('grandTotal');
+    const clearAllBtn = document.getElementById('clearAll');
+    const clearCoinsBtn = document.getElementById('clearCoins');
+    const clearBillsBtn = document.getElementById('clearBills');
+
+    const fmt = n => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(n||0);
+
+    // Clock: show current date and time (DE format) without seconds and update every minute
+    function updateClock(){
+      const now = new Date();
+      // timeStyle 'short' typically produces HH:mm (no seconds)
+      const formatted = new Intl.DateTimeFormat('de-DE',{dateStyle:'medium', timeStyle:'short'}).format(now);
+      const el = document.getElementById('clock');
+      if(el) el.textContent = formatted;
+    }
+    updateClock();
+    // update every 60s since seconds are not shown
+    setInterval(updateClock, 60000);
+
+    function calcCashSum(){
+      const coins = (coin10.value || 0) * 0.10 + (coin20.value || 0) * 0.20 + (coin50.value || 0) * 0.50 + (coin100.value || 0) * 1.00 + (coin200.value || 0) * 2.00;
+      coinSumEl.textContent = fmt(coins);
+      saveCash();
+      calcTotalSum();
+    }
+
+    function calcBillSum(){
+      const bills = (bill5.value || 0) * 5 + (bill10.value || 0) * 10 + (bill20.value || 0) * 20 + (bill50.value || 0) * 50 + (bill100.value || 0) * 100;
+      billSumEl.textContent = fmt(bills);
+      saveBills();
+      calcTotalSum();
+        document.getElementById('bill5Sum').textContent = fmt((bill5.value || 0) * 5);
+        document.getElementById('bill10Sum').textContent = fmt((bill10.value || 0) * 10);
+        document.getElementById('bill20Sum').textContent = fmt((bill20.value || 0) * 20);
+        document.getElementById('bill50Sum').textContent = fmt((bill50.value || 0) * 50);
+        document.getElementById('bill100Sum').textContent = fmt((bill100.value || 0) * 100);
+    }
+
+    function calcTotalSum(){
+      const coins = (coin10.value || 0) * 0.10 + (coin20.value || 0) * 0.20 + (coin50.value || 0) * 0.50 + (coin100.value || 0) * 1.00 + (coin200.value || 0) * 2.00;
+      const bills = (bill5.value || 0) * 5 + (bill10.value || 0) * 10 + (bill20.value || 0) * 20 + (bill50.value || 0) * 50 + (bill100.value || 0) * 100;
+      const cashTotal = coins + bills;
+      totalSumEl.textContent = fmt(cashTotal);
+      
+      const ecTotal = state.items.reduce((s,it)=>s+it,0);
+      const grandTotal = ecTotal + cashTotal;
+      grandTotalEl.textContent = fmt(grandTotal);
+    }
+
+    function recalc(){
+      const total = state.items.reduce((s,it)=>s+it,0);
+      countEl.textContent = state.items.length;
+      sumEl.textContent = fmt(total);
+      listEl.innerHTML = state.items.map((it,idx)=>`
+        <div class="row">
+          <div class="amt">${fmt(it)}</div>
+          <div class="actions">
+            <button onclick="removeItem(${idx})">Löschen</button>
+          </div>
+        </div>`).join('');
+        save();
+        calcTotalSum();
+    }
+    function addItem(){
+      const val = parseFloat(amountEl.value.replace(',','.'));
+      if(!isNaN(val) && val>0){
+        state.items.push(Math.round(val*100)/100);
+        amountEl.value='';
+        recalc();
+      }
+    }
+    function removeItem(idx){
+      state.items.splice(idx,1);
+      recalc();
+    }
+
+    function clearItems(){
+            state.items.splice(0, state.items.length);
+            recalc();
+        }
+
+    function clearAll(){
+      state.items.splice(0, state.items.length);
+      coin10.value = '';
+      coin20.value = '';
+      coin50.value = '';
+      coin100.value = '';
+      coin200.value = '';
+      bill5.value = '';
+      bill10.value = '';
+      bill20.value = '';
+      bill50.value = '';
+      bill100.value = '';
+      recalc();
+      calcCashSum();
+      calcBillSum();
+    }
+
+    function clearCoins(){
+      coin10.value = '';
+      coin20.value = '';
+      coin50.value = '';
+      coin100.value = '';
+      coin200.value = '';
+      calcCashSum();
+    }
+
+    function clearBills(){
+      bill5.value = '';
+      bill10.value = '';
+      bill20.value = '';
+      bill50.value = '';
+      bill100.value = '';
+      calcBillSum();
+    }
+
+    function load(){
+        const data = localStorage.getItem('kellnerRechnerItems');
+        if(data){state.items = JSON.parse(data);}
+        recalc();
+        }
+
+    function save(){
+    localStorage.setItem('kellnerRechnerItems', JSON.stringify(state.items));
+    }
+
+    function saveCash(){
+      const cashData = {
+        coin10: coin10.value,
+        coin20: coin20.value,
+        coin50: coin50.value,
+        coin100: coin100.value,
+        coin200: coin200.value
+      };
+      localStorage.setItem('kellnerRechnerCash', JSON.stringify(cashData));
+    }
+
+    function saveBills(){
+      const billData = {
+        bill5: bill5.value,
+        bill10: bill10.value,
+        bill20: bill20.value,
+        bill50: bill50.value,
+        bill100: bill100.value
+      };
+      localStorage.setItem('kellnerRechnerBills', JSON.stringify(billData));
+    }
+
+    function loadCash(){
+      const data = localStorage.getItem('kellnerRechnerCash');
+      if(data){
+        const cashData = JSON.parse(data);
+        if(cashData.coin10) coin10.value = cashData.coin10;
+        if(cashData.coin20) coin20.value = cashData.coin20;
+        if(cashData.coin50) coin50.value = cashData.coin50;
+        if(cashData.coin100) coin100.value = cashData.coin100;
+        if(cashData.coin200) coin200.value = cashData.coin200;
+        calcCashSum();
+      }
+    }
+
+    function loadBills(){
+      const data = localStorage.getItem('kellnerRechnerBills');
+      if(data){
+        const billData = JSON.parse(data);
+        if(billData.bill5) bill5.value = billData.bill5;
+        if(billData.bill10) bill10.value = billData.bill10;
+        if(billData.bill20) bill20.value = billData.bill20;
+        if(billData.bill50) bill50.value = billData.bill50;
+        if(billData.bill100) bill100.value = billData.bill100;
+        calcBillSum();
+      }
+    }
+    
+    addBtn.addEventListener('click', () => {
+    addItem();        // deine Logik
+    amountEl.focus(); // Tastatur bleibt offen, weil Feld wieder Fokus bekommt
+    });
+
+    amountEl.addEventListener('keydown',e=>{if(e.key==='Enter')addItem();});
+    clearAllBtn.addEventListener('click', clearAll);
+    clearCoinsBtn.addEventListener('click', clearCoins);
+    clearBillsBtn.addEventListener('click', clearBills);
+    
+    // Event Listener für Münzen
+    coin10.addEventListener('change', calcCashSum);
+    coin20.addEventListener('change', calcCashSum);
+    coin50.addEventListener('change', calcCashSum);
+    coin100.addEventListener('change', calcCashSum);
+    coin200.addEventListener('change', calcCashSum);
+
+    // Event Listener für Banknoten
+    bill5.addEventListener('change', calcBillSum);
+    bill10.addEventListener('change', calcBillSum);
+    bill20.addEventListener('change', calcBillSum);
+    bill50.addEventListener('change', calcBillSum);
+    bill100.addEventListener('change', calcBillSum);
+
+    load();
+    loadCash();
+    loadBills();
+
+  </script>
+</body>
+</html>
