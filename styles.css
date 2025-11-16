@@ -114,5 +114,29 @@ h1 {
 .aktuellerstundenzettel {
       margin-top: 2rem;
       text-align: center;
-      border:#3b82f6 2px solid;
+      border:#3b82f6 5px solid;
     }
+  
+.stundenlohneingabefeld{
+      text-align: left;
+      display: inline-block;
+      margin: 0  auto;
+      max-width: 6ch;
+
+    }
+.stundenlohneingabe{
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  height: 80%;
+}
+
+.zeile {
+  display: flex;
+  gap: 5px;          /* Abstand zwischen Feldern */
+  align-items: center; /* schöne vertikale Ausrichtung */
+  margin-bottom: 3px;  /* Abstand zwischen den Zeilen */
+}
+
+.zeile input {
+  width: 120px;        /* kompakte Eingabefelder */
+}

@@ -12,13 +12,19 @@
 
         <h1>Stundenzettel</h1>
 
+        <div class="stundenlohneingabe">
+        <label>Stundenlohn</label>
+        <input class="stundenlohneingabefeld" type="number" id="stundenlohnInput" placeholder="€/h" required>
+        </div>
+
+
+
         <div>
             <button id="stundenzettelErstellenButton">Neuen Stundenzettel erstellen</button>
         </div>
 
-        <div class="aktuellerstundenzettel">
+        <div id="aktuellerstundenzettel">
             <h2>Aktueller Zettel</h2>
-
             <form id="zeilenForm"></form>
         </div>
 
@@ -30,6 +36,6 @@
 
 
 
-
+    <script type="module" src="stundenzettel.js"></script>
 </body>
 </html>

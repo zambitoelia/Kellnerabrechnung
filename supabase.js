@@ -88,21 +88,4 @@ stundenzettelBtn.addEventListener('click', () => {
 });
 
 
-
-// Stundenzettel Konfiguration 
-const stundenzettelErstellenBtn = document.getElementById('stundenzettelErstellenButton');
-const zeilenForm = document.getElementById('zeilenForm');
-const stundenzettelMaxZeilen = 7;
-let aktuellerStundenzettelid = null;
-let aktuellerStundenzettelZeilenCount = 0;
-
-    // Stundenzettel erstellen
-stundenzettelErstellenBtn
-
-
-
-
-
-
-
 updateUI();
