@@ -37,4 +37,46 @@
   .clock { color:#94a3b8; font-size:1.5rem; margin-top:2px; }
     .small-btn { width:auto; padding:6px 8px; font-size:0.75rem !important; margin-bottom:12px; }
     .logInButton { background:#3b82f6; color:#fff;}
-    .anmeldung { float: right; margin:12px; }
+    .anmeldung { position: relative; float: right; margin:12px; }
+    
+.dropdown-content {
+      display: none;
+    }
+    
+    .username-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 16px !important;
+      background: transparent !important;
+      color: #e5e7eb !important;
+      text-align: left;
+      border: none !important;
+      cursor: pointer;
+      font-size: 0.95rem !important;
+      border-bottom: 1px solid #374151;
+    }
+    
+    .username-btn:hover {
+      background: #374151 !important;
+    }
+    
+    .logout-btn {
+      display: block;
+      width: 100% !important;
+      padding: 12px 16px !important;
+      background: #ef4444 !important;
+      color: #fff !important;
+      border: none !important;
+      cursor: pointer;
+      font-size: 0.95rem !important;
+      border-radius: 0 0 8px 8px !important;
+    }
+    
+    .logout-btn:hover {
+      background: #dc2626 !important;
+    }
+li {
+      list-style: none;
+      display: inline;
+      margin-left: 10px;
+    }

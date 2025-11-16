@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kellnerabrechnung</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.8/auth0-spa-js.production.js"></script>
 </head>
 <body>
       <div class="anmeldung">
-          <button class="logInButton" id="login-btn">Log In</button>
+        <ul class="dropdown">
+         <li><button class="logInButton" id="login-btn">Log In</button></li>
+         <li><button id="userText"></button></li>
+         <li><button class="logout-Btn" id="logout-Btn">Log Out</button></li> 
+        </ul>
     </div>
+
+
 
   <div class="wrap">
     <div class="header">
@@ -174,12 +179,11 @@
     const clearCoinsBtn = document.getElementById('clearCoins');
     const clearBillsBtn = document.getElementById('clearBills');
 
-    // Login Button
-    const loginBtn = document.getElementById('login-btn');
-
     const fmt = n => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(n||0);
 
-    // Clock: show current date and time (DE format) without seconds and update every minute
+    //UserVerwaltung
+
+
     function updateClock(){
       const now = new Date();
       // timeStyle 'short' typically produces HH:mm (no seconds)
@@ -188,8 +192,7 @@
       if(el) el.textContent = formatted;
     }
     updateClock();
-    // update every 60s since seconds are not shown
-    setInterval(updateClock, 60000);
+    setInterval(updateClock, 5000);
 
     function calcCashSum(){
       const coins = (coin10.value || 0) * 0.10 + (coin20.value || 0) * 0.20 + (coin50.value || 0) * 0.50 + (coin100.value || 0) * 1.00 + (coin200.value || 0) * 2.00;
@@ -356,10 +359,9 @@
     clearAllBtn.addEventListener('click', clearAll);
     clearCoinsBtn.addEventListener('click', clearCoins);
     clearBillsBtn.addEventListener('click', clearBills);
-    loginBtn.addEventListener('click', async () => {
-      await initAuth0();
-      await auth0.loginWithRedirect();      
-    });
+   // loginBtn.addEventListener('click', async () => {
+   //   await auth0.loginWithRedirect();      
+   //  });
 
 
     
@@ -382,5 +384,6 @@
     loadBills();
 
   </script>
+  <script type="module" src="/app.js" defer></script>
 </body>
 </html>
