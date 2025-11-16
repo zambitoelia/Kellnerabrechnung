@@ -1,82 +1,118 @@
-    body { font-family: system-ui; background:#0f172a; color:#e5e7eb; margin:0; }
-    .wrap { max-width:600px; margin:0 auto; padding:16px; }
-    .card { background:#111827; border-radius:12px; padding:16px; margin-bottom:16px; }
-    h2 { margin:0 0 12px; font-size:1rem; color:#94a3b8; }
-    input, button { width:100%; padding:12px; border-radius:8px; border:none; font-size:1rem; }
-    input { margin-bottom:10px; }
-    button { background:#22c55e; color:#052e12; font-weight:600; cursor:pointer; }
-    .stats { display:flex; justify-content:space-between; margin-top:12px; }
-    .stat { text-align:center; flex:1; }
-    .stat label { display:block; font-size:.8rem; color:#94a3b8; }
-    .stat .value { font-size:1.4rem; font-weight:700; }
-    .list { margin-top:12px; border-top:1px solid #1f2937; }
-    .row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #1f2937; gap:12px; }
-    .row:last-child { border-bottom:none; }
-    .row label { flex-shrink:0; min-width:auto; }
-    .row input { flex:1; max-width:80px; }
-    .amt { font-variant-numeric:tabular-nums; }
-    .actions button { background:#ef4444; color:#fff; font-size:.8rem; padding:6px 10px; margin-left:8px; }
-    .row .sum { flex-shrink:0; min-width:60px; text-align:right; font-size:0.9rem; color:#94a3b8; }
-    /* banknote-specific alignment: make labels same width, inputs aligned and sums closer */
-    .bills-list .row label { flex:0 0 72px; width:72px; }
-    .bills-list .row input { flex:0 0 64px; width:64px; }
-    .bills-list .row .sum { flex:0 0 72px; width:72px; margin-left:6px; text-align:right; }
-  /* header layout for small controls + sum */
-  .card-head { display:flex; align-items:center; gap:12px; justify-content:space-between; }
-  .card-head .left { display:flex; align-items:center; gap:12px; }
-  .card-head .sum { font-weight:700; color:#e5e7eb; }
-  .card-head .sum .value { font-size:1rem; }
-  /* header / clock */
-  /* stack header vertically: title above the small date/time */
-  .header { display:flex; flex-direction:column; align-items:flex-start; gap:6px; margin-bottom:12px; }
-  .header h1 { margin:0; font-size:2.4rem; line-height:1.02; color:#e5e7eb; max-width:100%; word-break:break-word; }
-  /* on small screens allow wrapping and use a slightly smaller size so it can take two lines */
-  @media (max-width:480px){
-    .header h1 { font-size:1.9rem; }
-  }
-  .clock { color:#94a3b8; font-size:1.5rem; margin-top:2px; }
-    .small-btn { width:auto; padding:6px 8px; font-size:0.75rem !important; margin-bottom:12px; }
-    .logInButton { background:#3b82f6; color:#fff;}
-    .anmeldung { position: relative; float: right; margin:12px; }
-    
-.dropdown-content {
-      display: none;
-    }
-    
-    .username-btn {
-      display: block;
-      width: 100%;
-      padding: 12px 16px !important;
-      background: transparent !important;
-      color: #e5e7eb !important;
-      text-align: left;
-      border: none !important;
-      cursor: pointer;
-      font-size: 0.95rem !important;
-      border-bottom: 1px solid #374151;
-    }
-    
-    .username-btn:hover {
-      background: #374151 !important;
-    }
-    
-    .logout-btn {
-      display: block;
-      width: 100% !important;
-      padding: 12px 16px !important;
-      background: #ef4444 !important;
-      color: #fff !important;
-      border: none !important;
-      cursor: pointer;
-      font-size: 0.95rem !important;
-      border-radius: 0 0 8px 8px !important;
-    }
-    
-    .logout-btn:hover {
-      background: #dc2626 !important;
-    }
+body { font-family: system-ui; background:#0f172a; color:#e5e7eb; margin:0; word-break:break-word;}
+.wrap { max-width:600px; margin:0 auto; padding:16px; }
+.start-wrap { 
+max-width:600px; 
+
+justify-content: center; /* Horizontal alignment */
+align-items: center; /* Vertical alignment */
+margin: auto;
+margin-top: 10rem;
+}
+#loginButton
+{display: none};
+#logoutButton
+{display: none};
+.card { background:#111827; border-radius:12px; padding:16px; margin-bottom:16px;}
+h2 { margin:0 0 12px; font-size:1rem; color:#94a3b8; }
+input, button { width:100%; padding:12px; border-radius:8px; border:none; font-size:1rem; }
+input { margin-bottom:10px; }
+button { background:#22c55e; color:#052e12; font-weight:600; cursor:pointer; }
+.stats { display:flex; justify-content:space-between; margin-top:12px; }
+.stat { text-align:center; flex:1; }
+.stat label { display:block; font-size:.8rem; color:#94a3b8; }
+.stat .value { font-size:1.4rem; font-weight:700; }
+.list { margin-top:12px; border-top:1px solid #1f2937; }
+.row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #1f2937; gap:12px; }
+.row:last-child { border-bottom:none; }
+.row label { flex-shrink:0; min-width:auto; }
+.row input { flex:1; max-width:80px; }
+.amt { font-variant-numeric:tabular-nums; }
+.actions button { background:#ef4444; color:#fff; font-size:.8rem; padding:6px 10px; margin-left:8px; }
+.row .sum { flex-shrink:0; min-width:60px; text-align:right; font-size:0.9rem; color:#94a3b8; }
+/* banknote-specific alignment: make labels same width, inputs aligned and sums closer */
+.bills-list .row label { flex:0 0 72px; width:72px; }
+.bills-list .row input { flex:0 0 64px; width:64px; }
+.bills-list .row .sum { flex:0 0 72px; width:72px; margin-left:6px; text-align:right; }
+/* header layout for small controls + sum */
+.card-head { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+.card-head .left { display:flex; align-items:center; gap:12px; }
+.card-head .sum { font-weight:700; color:#e5e7eb; }
+.card-head .sum .value { font-size:1rem; }
+/* header / clock */
+/* stack header vertically: title above the small date/time */
+.header { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; align-items: center; margin-top: 2.5rem;}
+.header h2 { margin:0; font-size:2rem; line-height:1.02; color:#e5e7eb; max-width:100%; word-break:break-word;}
+@media (max-width:480px){
+  .header h2 { font-size:1.9rem; }
+}
+.clock { color:#94a3b8; font-size:1.2rem;}
+.small-btn { width:auto; padding:6px 8px; font-size:0.75rem !important; margin-bottom:12px; }
 li {
       list-style: none;
-      display: inline;
+      display:block;
       margin-left: 10px;
+    }
+
+.BenutzerBereich {
+      display: flex;
+      text-align: center;
+      flex-direction:column;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+.loginButton { 
+  background:#3b82f6; 
+  color:#fff;
+  padding: 10px 100px;       /* Höhe und Innenabstand */
+  width: 100%;         /* nimmt die volle Breite des Containers */
+  max-width: 250px;    /* optional: maximale Breite */
+  display: block;      /* sorgt dafür, dass er als Block dargestellt wird */
+  margin: 0 auto;      /* zentriert ihn im Container */
+}
+.logoutButton {
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      padding: 4px 10px;
+      width: auto;
+    }
+
+h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      color: #e5e7eb;
+      text-align: center;
+    }
+.anmeldung ul {
+      padding: 0;
+    }
+
+.menue
+{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+.inhalt button {
+      background:#d3d29a; 
+      color:#000000;
+      display: block;      /* sorgt dafür, dass er als Block dargestellt wird */
+      margin: auto;      /* zentriert ihn im Container */
+      margin-bottom: 3rem;;
+      text-align: center;
+      padding: 30px 30px;    
+      font-size: 2rem;   /* Höhe und Innenabstand */
+}
+.inhalt ul {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+.aktuellerstundenzettel {
+      margin-top: 2rem;
+      text-align: center;
+      border:#3b82f6 2px solid;
     }

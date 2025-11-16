@@ -16,7 +16,8 @@
     "vite": "^7.2.2"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^2.8.0"
+    "@auth0/auth0-spa-js": "^2.8.0",
+    "@supabase/supabase-js": "^2.81.1"
   },
   "type": "commonjs"
 }
