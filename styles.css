@@ -85,6 +85,28 @@ h1 {
       color: #e5e7eb;
       text-align: center;
     }
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #1e293b;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: all 0.2s;
+  border: 1px solid #334155;
+}
+
+.back-button:hover {
+  background: #334155;
+  color: #e5e7eb;
+  border-color: #475569;
+}
 .anmeldung ul {
       padding: 0;
     }
@@ -98,12 +120,31 @@ h1 {
 .inhalt button {
       background:#d3d29a; 
       color:#000000;
-      display: block;      /* sorgt dafür, dass er als Block dargestellt wird */
-      margin: auto;      /* zentriert ihn im Container */
-      margin-bottom: 3rem;;
-      text-align: center;
-      padding: 30px 30px;    
-      font-size: 2rem;   /* Höhe und Innenabstand */
+}
+
+/* Button Gruppe mit Abständen */
+.button-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+}
+
+.button-group button {
+      width: auto;
+      padding: 12px 20px;
+      font-size: 1rem;
+}
+
+/* Delete Button mit Extra-Abstand */
+.delete-button {
+      background: #ef4444 !important;
+      color: #fff !important;
+}
+
+/* Spezifischer Abstand vor dem Lösch-Button */
+.button-group button:nth-child(2) {
+      margin-right: 30px;
 }
 .inhalt ul {
       display: flex;
@@ -132,11 +173,361 @@ h1 {
 
 .zeile {
   display: flex;
-  gap: 5px;          /* Abstand zwischen Feldern */
+  gap: 8px;          /* Abstand zwischen Feldern */
   align-items: center; /* schöne vertikale Ausrichtung */
-  margin-bottom: 3px;  /* Abstand zwischen den Zeilen */
+  margin-bottom: 10px;  /* Abstand zwischen den Zeilen */
 }
 
-.zeile input {
+.zeile input[type="date"],
+.zeile input[type="time"] {
   width: 120px;        /* kompakte Eingabefelder */
+  flex-shrink: 0;
+}
+
+/* Auszahlung Container für Stundenzettel */
+.auszahlung-container {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 2px solid #1f2937;
+}
+
+.checkbox-label-zettel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  color: #e5e7eb;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.checkbox-label-zettel input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+  transform: scale(1.3);
+}
+
+.zettel-auszahlungs-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  background: #111827;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.auszahlung-zeile {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.auszahlung-zeile label {
+  min-width: 100px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.auszahlung-zeile input[type="number"] {
+  width: 120px;
+}
+
+.auszahlung-zeile input[type="date"] {
+  width: 150px;
+}
+
+/* Bild Upload */
+.bild-upload-container {
+  margin-top: 30px;
+  padding: 20px;
+  background: #1e293b;
+  border-radius: 12px;
+  border: 1px solid #334155;
+}
+
+.bild-upload-container h3 {
+  margin: 0 0 15px 0;
+  color: #e2e8f0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.bild-upload-container input[type="file"] {
+  display: block;
+  margin-bottom: 15px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.bild-vorschau {
+  margin-top: 15px;
+}
+
+.bild-vorschau img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+
+/* Zettel abgeben */
+.abgeben-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.abgeben-button {
+  padding: 12px 30px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.abgeben-button:hover {
+  background: #2563eb;
+}
+
+.abgeben-button:disabled,
+.abgeben-button.abgegeben {
+  background: #22c55e;
+  cursor: not-allowed;
+}
+
+.abgeben-button.abgegeben:hover {
+  background: #22c55e;
+}
+
+/* Custom Popup */
+.custom-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.popup-content {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  border: 2px solid #ef4444;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  max-width: 400px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.popup-content h3 {
+  margin: 0 0 15px 0;
+  color: #ef4444;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.popup-content p {
+  margin: 0 0 25px 0;
+  color: #e2e8f0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.popup-btn {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-width: 100px;
+  white-space: nowrap;
+}
+
+.popup-close-btn {
+  background: #3b82f6;
+}
+
+.popup-close-btn:hover {
+  background: #2563eb;
+}
+
+.popup-confirm-btn {
+  background: #22c55e;
+}
+
+.popup-confirm-btn:hover {
+  background: #16a34a;
+}
+
+.popup-cancel-btn {
+  background: #6b7280;
+}
+
+.popup-cancel-btn:hover {
+  background: #4b5563;
+}
+
+.popup-content h3.error {
+  color: #ef4444;
+}
+
+.popup-content h3.success {
+  color: #22c55e;
+}
+
+.popup-content h3.warning {
+  color: #f59e0b;
+}
+
+.popup-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #e5e7eb;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.popup-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.popup-input::placeholder {
+  color: #64748b;
+}
+
+.password-input-container {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.password-input-container .popup-input {
+  margin-bottom: 0;
+  padding-right: 45px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+  width: auto;
+}
+
+.toggle-password-btn:hover {
+  color: #e5e7eb;
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.toggle-password-btn:active {
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.toggle-password-btn .eye-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.toggle-password-btn.active {
+  color: #3b82f6;
+}
+
+.zeile .stunden,
+.zeile .verdienst {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #22c55e;
+  min-width: 60px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.zeile .trenner {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  padding: 0 5px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Summenzeile */
+.summe-zeile {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #1f2937;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.summe-label {
+  color: #94a3b8;
+  margin-right: 10px;
+}
+
+.summe-wert {
+  color: #22c55e;
+  min-width: 70px;
+}
+
+.summe-zeile .trenner {
+  font-size: 1.3rem;
+  color: #94a3b8;
+  padding: 0 8px;
 }

@@ -10,6 +10,8 @@
 
     <div class="wrap">
 
+        <a href="index.html" class="back-button">← Zurück zur Startseite</a>
+
         <h1>Stundenzettel</h1>
 
         <div class="stundenlohneingabe">
@@ -19,13 +21,60 @@
 
 
 
-        <div>
+        <div style="margin-bottom: 30px;">
+            <label for="stundenzettelAuswahl">Stundenzettel auswählen:</label>
+            <select id="stundenzettelAuswahl">
+                <option value="">-- Stundenzettel wählen --</option>
+            </select>
+        </div>
+        
+        <div class="button-group">
             <button id="stundenzettelErstellenButton">Neuen Stundenzettel erstellen</button>
+            <button id="stundenzettelSpeichernButton">Stundenzettel speichern</button>
+            <button id="stundenzettelLoeschenButton" class="delete-button">Stundenzettel löschen</button>
         </div>
 
         <div id="aktuellerstundenzettel">
             <h2>Aktueller Zettel</h2>
             <form id="zeilenForm"></form>
+            <div class="summe-zeile">
+                <span class="summe-label">Gesamt:</span>
+                <span id="gesamtStunden" class="summe-wert">0h</span>
+                <span class="trenner">|</span>
+                <span id="gesamtVerdienst" class="summe-wert">0€</span>
+            </div>
+            <div class="auszahlung-container">
+                <label class="checkbox-label-zettel">
+                    <input type="checkbox" id="zettelAusbezahlt">
+                    Ausbezahlt
+                </label>
+                <div id="zettelAuszahlungsDetails" class="zettel-auszahlungs-details" style="display: none;">
+                    <div class="auszahlung-zeile">
+                        <label>Bar:</label>
+                        <input type="number" id="zettelBarAusbezahlt" placeholder="Betrag" step="0.01">
+                        <input type="date" id="zettelDatumBar">
+                    </div>
+                    <div class="auszahlung-zeile">
+                        <label>Überweisung:</label>
+                        <input type="number" id="zettelUeberwiesen" placeholder="Betrag" step="0.01">
+                        <input type="date" id="zettelDatumUeberwiesen">
+                    </div>
+                </div>
+            </div>
+
+            <button id="neueZeileButton">Neue Zeile einfügen</button>
+
+            <!-- Bild Upload -->
+            <div class="bild-upload-container">
+                <h3>Stundenzettel Foto</h3>
+                <input type="file" id="zettelBildUpload" accept="image/*">
+                <div id="bildVorschau" class="bild-vorschau"></div>
+            </div>
+
+            <!-- Zettel abgeben Button -->
+            <div class="abgeben-container">
+                <button id="zettelAbgebenBtn" class="abgeben-button">Zettel abgeben</button>
+            </div>
         </div>
 
 
@@ -35,6 +84,19 @@
 
 
 
+
+    <!-- Custom Popup -->
+    <div id="customPopup" class="custom-popup" style="display: none;">
+        <div class="popup-content">
+            <h3 id="popupTitle">Hinweis</h3>
+            <p id="popupMessage">Nachricht</p>
+            <div id="popupButtons" class="popup-buttons">
+                <button id="popupConfirmBtn" class="popup-btn popup-confirm-btn" style="display: none;">Bestätigen</button>
+                <button id="popupCancelBtn" class="popup-btn popup-cancel-btn" style="display: none;">Abbrechen</button>
+                <button id="popupCloseBtn" class="popup-btn popup-close-btn">OK</button>
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="stundenzettel.js"></script>
 </body>
