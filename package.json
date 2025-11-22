@@ -19,5 +19,8 @@
     "@auth0/auth0-spa-js": "^2.8.0",
     "@supabase/supabase-js": "^2.81.1"
   },
-  "type": "commonjs"
-}
+  "type": "module",
+  "engines": {
+  "node": "18.x"
+      } 
+    }  
