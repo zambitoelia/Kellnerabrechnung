@@ -9,7 +9,7 @@ margin: auto;
 margin-top: 10rem;
 }
 #loginButton
-{display: none};
+{display: none} ;
 #logoutButton
 {display: none};
 .card { background:#111827; border-radius:12px; padding:16px; margin-bottom:16px;}
