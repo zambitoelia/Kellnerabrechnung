@@ -279,7 +279,7 @@ async function ladeAlleStundenzettel() {
     zettelMitDaten.forEach(zettel => {
         const option = document.createElement('option');
         option.value = zettel.zettel_id;
-        option.textContent = `Stundenzettel #${zettel.zettel_id} (${zettel.datumBereich})`;
+        option.textContent = `Stundenzettel ${zettel.datumBereich}`;
         stundenzettelAuswahl.appendChild(option);
     });
     

@@ -176,7 +176,7 @@ currentUser = user || null;
 if (user) {
     logoutBtn.style.display = 'block';
     willkommenText.style.display = 'block';
-    willkommenText.textContent = `Willkommen, ${user.email}`;
+    willkommenText.innerHTML = `Willkommen,<br>${user.email}`;
     loginBtn.style.display = 'none';
 } else {
     logoutBtn.style.display = 'none';
