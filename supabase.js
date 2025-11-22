@@ -5,6 +5,7 @@ const logoutBtn = document.getElementById('logoutButton');
 const willkommenText = document.getElementById('willkommenText');
 const abrechnungBtn = document.getElementById('linkToAbrechnung');
 const stundenzettelBtn = document.getElementById('linkToStundenzettel');
+const dienstplanBtn = document.getElementById('linkToDienstplan');
 let currentUser = null;
 
 // Custom Popup Elemente
@@ -209,6 +210,11 @@ stundenzettelBtn.addEventListener('click', async () => {
     else{
     window.location.href = '3-Stundenzettel.html';
     }
+});
+
+// klick auf Dienstplan BUTTON
+dienstplanBtn.addEventListener('click', () => {
+    window.location.href = '4-Dienstplan.html';
 });
 
 

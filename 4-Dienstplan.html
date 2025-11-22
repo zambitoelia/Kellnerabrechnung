@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dienstplan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="wrap">
+
+        <a href="index.html" class="back-button">← Zurück zur Startseite</a>
+
+        <h1>Dienstplan</h1>
+
+        <!-- Admin Upload Bereich -->
+        <div id="adminUploadBereich" class="admin-upload-container" style="display: none;">
+            <div class="card">
+                <h2>Admin Bereich - Dienstplan hochladen</h2>
+                <div class="upload-section">
+                    <label for="planType">Dienstplan Typ:</label>
+                    <select id="planType" class="plan-type-select">
+                        <option value="current">Aktueller Dienstplan (diese Woche)</option>
+                        <option value="upcoming">Nächster Dienstplan (nächste Woche)</option>
+                    </select>
+                    
+                    <label for="planUpload">Dienstplan hochladen (PDF, Bild):</label>
+                    <input type="file" id="planUpload" accept="image/*,.pdf" class="file-upload-input">
+                    
+                    <button id="uploadBtn" class="upload-button">Hochladen</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nächster Dienstplan (klein angezeigt) -->
+        <div id="upcomingPlanContainer" class="upcoming-plan-container" style="display: none;">
+            <div class="card upcoming-card">
+                <h3>📅 Nächste Woche (ab Montag)</h3>
+                <div id="upcomingPlanContent" class="plan-preview">
+                    <!-- Wird dynamisch befüllt -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Aktueller Dienstplan -->
+        <div id="currentPlanContainer" class="current-plan-container">
+            <div class="card">
+                <h2>Aktueller Dienstplan</h2>
+                <div id="currentPlanWeek" class="plan-week-info">
+                    <!-- KW Info wird hier angezeigt -->
+                </div>
+                <div id="currentPlanContent" class="plan-content">
+                    <p class="no-plan-message">Kein Dienstplan verfügbar</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Archiv Dropdown -->
+        <div class="archive-container">
+            <div class="card">
+                <h2>Archiv</h2>
+                <select id="archivSelect" class="archive-select">
+                    <option value="">-- Ältere Dienstpläne anzeigen --</option>
+                </select>
+                <div id="archivContent" class="plan-content archive-content" style="display: none;">
+                    <!-- Archivierter Plan wird hier angezeigt -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Custom Popup -->
+    <div id="customPopup" class="custom-popup" style="display: none;">
+        <div class="popup-content">
+            <h3 id="popupTitle">Hinweis</h3>
+            <p id="popupMessage">Nachricht</p>
+            <div id="popupButtons" class="popup-buttons">
+                <button id="popupConfirmBtn" class="popup-btn popup-confirm-btn" style="display: none;">Bestätigen</button>
+                <button id="popupCancelBtn" class="popup-btn popup-cancel-btn" style="display: none;">Abbrechen</button>
+                <button id="popupCloseBtn" class="popup-btn popup-close-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="dienstplan.js"></script>
+</body>
+</html>
