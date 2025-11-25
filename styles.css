@@ -1334,24 +1334,49 @@ h1 {
 
   /* Stundenzettel responsive */
   .zeile {
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 15px;
+    background: linear-gradient(145deg, rgba(61, 53, 47, 0.3), rgba(44, 36, 32, 0.3));
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--bg-light);
   }
 
-  .zeile input[type="date"],
+  .zeile input[type="date"] {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    font-size: 16px !important;
+    padding: 12px 50px 12px 8px !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
   .zeile input[type="time"] {
-    width: calc(50% - 3px);
-    min-width: 100px;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+    box-sizing: border-box;
   }
 
   .zeile .stunden,
   .zeile .verdienst {
-    font-size: 1rem;
-    min-width: 50px;
+    font-size: 1.2rem;
+    min-width: auto;
+    text-align: center;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.08));
+    border-radius: 8px;
+    border: 1px solid rgba(34, 197, 94, 0.3);
   }
 
   .zeile .trenner {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 4px 0;
   }
 
   .auszahlung-zeile {
