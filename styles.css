@@ -1356,10 +1356,14 @@ h1 {
   }
 
   .zeile input[type="time"] {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-    box-sizing: border-box;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    font-size: 16px !important;
+    padding: 12px 50px 12px 8px !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   .zeile .stunden,
